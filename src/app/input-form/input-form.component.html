@@ -1,0 +1,19 @@
+<h1>Input Form</h1>
+<div>
+  <p>以下の入力欄に必要情報を入力してください</p>
+  <form [formGroup]="inputForm">
+    <div>
+      <label for="name">お名前</label>
+      <input id="name" formControlName="name" />
+    </div>
+    <div>
+      <label for="birthday">生年月日</label>
+      <input type="number" id="birthday" formControlName="birthday" />
+    </div>
+    <div>
+      <label for="hobby">趣味</label>
+      <input id="hobby" formControlName="hobby" />
+    </div>
+    <button (click)="save()">保存する</button>
+  </form>
+</div>
