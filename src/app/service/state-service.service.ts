@@ -15,7 +15,6 @@ export class StateServiceService {
 
   commitInputValue(inputValue: InputFormValue) {
     this.inputValueState = new BehaviorSubject(inputValue);
-    console.log(this.inputValueState);
     return this.inputValueState.asObservable();
   }
 
