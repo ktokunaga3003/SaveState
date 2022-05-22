@@ -8,14 +8,8 @@ import { StateServiceService } from '../service/state-service.service';
   selector: 'poc-input-form',
   templateUrl: './input-form.component.html',
   styleUrls: ['./input-form.component.css'],
-  providers: [StateServiceService]
 })
 export class InputFormComponent implements OnInit {
-  inputFormValue: InputFormValue = {
-    name: '',
-    birthday: '',
-    hobby: '',
-  };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,17 +20,24 @@ export class InputFormComponent implements OnInit {
   inputForm: FormGroup = this.formBuilder.group({});
 
   ngOnInit(): void {
-    this.inputForm = this.formBuilder.group({
-      name: [this.inputFormValue.name, [Validators.required]],
-      birthday: [this.inputFormValue.birthday, [Validators.pattern('d{8}')]],
-      hobby: [this.inputFormValue.hobby, [Validators.maxLength(15)]],
+    this.stateService.getInputValue().subscribe((inputValue) => {
+      this.inputForm = this.formBuilder.group({
+        name: [inputValue.name, [Validators.required]],
+        birthday: [
+          inputValue.birthday,
+          [Validators.pattern('[0-9]{8}')],
+        ],
+        hobby: [inputValue.hobby, [Validators.maxLength(15)]],
+      });
     });
   }
 
   save() {
-    console.log('この値を保存！', this.inputForm.value)
-    this.stateService.commitInputValue(this.inputForm.value)
-    console.log('保存した値を確認！',this.stateService.getInputValue())
+    if (this.inputForm.invalid) {
+      return;
+    }
+    this.stateService.commitInputValue(this.inputForm.value);
     this.router.navigate(['reference']);
   }
+
 }

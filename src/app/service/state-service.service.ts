@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { InputFormValue } from '../type/input-form';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class StateServiceService {
-  private _inputValue: BehaviorSubject<Partial<InputFormValue>> | undefined;
-  private inputValue: Observable<Partial<InputFormValue>> | undefined;
+  private inputValueState: BehaviorSubject<InputFormValue> | undefined;
   private emptyValue: InputFormValue = {
     name: '',
     birthday: '',
@@ -14,24 +13,15 @@ export class StateServiceService {
 
   constructor() {}
 
-  commitInputValue(inputValue: Partial<InputFormValue>) {
-    // if (this._inputValue) {
-    //   console.log('ここ')
-    //   const currentState = this._inputValue.getValue();
-    //   this._inputValue.next({ ...currentState, ...inputValue });
-    //   return this.inputValue
-    // } else {
-      console.log('こっち')
-      this._inputValue = new BehaviorSubject(inputValue)
-      this.inputValue = this._inputValue.asObservable()
-      console.log(this.inputValue)
-      return this.inputValue
-    // }
+  commitInputValue(inputValue: InputFormValue) {
+    this.inputValueState = new BehaviorSubject(inputValue);
+    console.log(this.inputValueState);
+    return this.inputValueState.asObservable();
   }
 
-  getInputValue(): Observable<Partial<InputFormValue>> {
-    console.log('_inputValue', this._inputValue)
-    console.log('inputValue', this.inputValue);
-    return this.inputValue ? this.inputValue : of(this.emptyValue);
+  getInputValue(): Observable<InputFormValue> {
+    return this.inputValueState
+      ? this.inputValueState?.asObservable()
+      : of(this.emptyValue);
   }
 }

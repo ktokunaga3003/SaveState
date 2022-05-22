@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { TopComponent } from './top/top.component';
 import { InputFormComponent } from './input-form/input-form.component';
 import { ReferenceComponent } from './reference/reference.component';
+import { StateServiceService } from './service/state-service.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { ReferenceComponent } from './reference/reference.component';
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [StateServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

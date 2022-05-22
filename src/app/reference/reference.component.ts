@@ -6,7 +6,6 @@ import { InputFormValue } from '../type/input-form';
   selector: 'poc-reference',
   templateUrl: './reference.component.html',
   styleUrls: ['./reference.component.css'],
-  providers: [StateServiceService],
 })
 export class ReferenceComponent implements OnInit {
   inputValue: Partial<InputFormValue> = {
@@ -19,7 +18,6 @@ export class ReferenceComponent implements OnInit {
 
   ngOnInit(): void {
     this.stateService.getInputValue().subscribe((inputValue) => {
-      console.log('値をゲット！', inputValue)
       this.inputValue = inputValue;
     });
   }
